@@ -10,7 +10,6 @@ import { saveAs } from 'file-saver';
 import ZapparSharing from '@zappar/sharing';
 import getLights from './lights';
 import Models from './models';
-import SoundManager from './sound';
 import DocumentManager from '../dom/elements';
 
 class World {
@@ -21,8 +20,6 @@ class World {
   private environmentMap = new ZapparThree.CameraEnvironmentMap();
 
   public models!: Models;
-
-  public soundManager = new SoundManager();
 
   public onLoaded = (callback: () => void) => callback();
 
@@ -127,11 +124,9 @@ class World {
     // Pass our loading manager in to ensure the progress bar works correctly
     await this.models.load();
     const {
-      instantTrackingHeadset, adaptor, controller, anchor, faceTrackingHeadset, phone,
+      instantTrackingHeadset,
     } = this.models;
-    this.trackerGroups.instant.add(instantTrackingHeadset, adaptor, controller, anchor);
-
-    this.trackerGroups.face.add(faceTrackingHeadset, phone);
+    this.trackerGroups.instant.add(instantTrackingHeadset);
 
     this.mixers.push(this.models.instantTrackingHeadsetMixer);
 
@@ -163,7 +158,7 @@ class World {
       const sel: string = selected === i ? 'selected' : '';
       return `<option ${sel} value="${i}">${animation.name}</option>`;
     }).join('\n');
-    const showSelector = animations.length > 1;
+    const showSelector = animations.length > 0;
     DocumentManager.changeAnimationUI.classList.toggle('hidden', !showSelector);
     DocumentManager.changeAnimationUI.classList.toggle('visible', showSelector);
   }
@@ -175,7 +170,6 @@ class World {
   public takeSnapshot() {
     // Play the camera sound, if it's already playing,
     // reset so that it will play whenever we click on it
-    this.soundManager.cameraPlay();
 
     // Get canvas from dom
     const canvas = document.querySelector('canvas');
@@ -226,7 +220,6 @@ class World {
 
     this.trackers.face.onVisible.bind(() => {
       this.trackerGroups.face.visible = true;
-      this.models.faceTrackingHeadset.visible = true;
     });
 
     this.trackers.face.onNotVisible.bind(() => { this.trackerGroups.face.visible = false; });

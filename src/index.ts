@@ -48,7 +48,7 @@ class Experience {
   */
   private startInstantTracking(): void {
     const {
-      instantTrackingHeadset, adaptor, controller, anchor,
+      instantTrackingHeadset,
     } = this.world.models;
 
     // AnimationHandler.splide.on('move', () => AnimationHandler.switchSlide(this.world, this.DOM));
@@ -95,7 +95,6 @@ class Experience {
   */
   private flipCamera(): void {
     // Start the button sound
-    this.world.soundManager.defaultButtonSoundPlay();
     this.world.enableEnvironmentMap(this.userFacing);
     if (!this.userFacing) {
       this.startFaceTracking();
@@ -112,7 +111,6 @@ class Experience {
     // When the experience loads we'll let the user choose a place in their room for
     // the content to appear using setAnchorPoseFromCameraOffset (see below)
     // The user can confirm the location by tapping on the screen
-    this.world.soundManager.defaultButtonSoundPlay();
 
     // If we haven't placed when the button has been tapped...
     this.DOM.isPlacedUIState(this.instantTrackerPlaced);
@@ -132,10 +130,8 @@ class Experience {
   */
   private togglePhone(): void {
     // Start the button sound
-    this.world.soundManager.defaultButtonSoundPlay();
     this.DOM.togglePhoneUI(this.showPhone);
 
-    this.world.models.phone.visible = !this.showPhone;
     this.showPhone = !this.showPhone;
   }
 

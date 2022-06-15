@@ -6,15 +6,19 @@ import * as ZapparThree from '@zappar/zappar-threejs';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import AsyncGLTFLoader from '../util/asyncGLTF';
 
-// import headsetModel from '../../assets/headset.glb';
-import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
-
+/*
 import lensModel from '../../assets/lensgltf.glb';
 import controllerModel from '../../assets/controller.glb';
 import anchorModel from '../../assets/anchor.glb';
 import phoneModel from '../../assets/phone.glb';
+*/
 import meshPlasticTransparentMaterial from '../materials/meshPlasticTransparent';
 import meshPlasticTransparentMaterialFace from '../materials/meshPlasticTransparentFace';
+// import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
+import headsetModel from '../../assets/Flamingo.glb';
+
+const modelScale = 0.01;
+
 
 class Models {
   public instantTrackingHeadset!: THREE.Object3D;
@@ -22,16 +26,6 @@ class Models {
   public instantTrackingHeadsetMixer!: THREE.AnimationMixer;
 
   public instantTrackingHeadsetAnimations!: Array<any>;
-
-  public adaptor!: THREE.Object3D;
-
-  public controller!: THREE.Object3D;
-
-  public anchor!: THREE.Object3D;
-
-  public faceTrackingHeadset!: THREE.Object3D;
-
-  public phone!: THREE.Object3D;
 
   public floor = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight),
@@ -47,9 +41,9 @@ class Models {
 
   public async load() {
     const [
-      _instantTrackingModel, _adaptor, _controller, _anchor, _faceTrackingHeadset, _phone,
+      _instantTrackingModel,
     ] = await AsyncGLTFLoader.loadAll(
-      [headsetModel, lensModel, controllerModel, anchorModel, headsetModel, phoneModel],
+      [headsetModel],
       this.loadingManager,
     );
     console.log(`Animated model: ${_instantTrackingModel.animations.length} `, _instantTrackingModel);
@@ -57,12 +51,6 @@ class Models {
     this.instantTrackingHeadset = _instantTrackingModel.scene;
     this.instantTrackingHeadsetMixer = new THREE.AnimationMixer(this.instantTrackingHeadset);
     this.instantTrackingHeadsetAnimations = _instantTrackingModel.animations;
-
-    this.adaptor = _adaptor.scene;
-    this.controller = _controller.scene;
-    this.anchor = _anchor.scene;
-    this.faceTrackingHeadset = _faceTrackingHeadset.scene;
-    this.phone = _phone.scene;
 
     this.setupVisibility();
     this.setupTransforms();
@@ -72,10 +60,11 @@ class Models {
 
   public setupTransforms() {
     // Set up transforms for our models our instant tracking scene
+
     this.instantTrackingHeadset.position.set(0, -0.6, 0);
-    const scale = 0.6;
-    this.instantTrackingHeadset.scale.set(scale, scale, scale);
+    this.instantTrackingHeadset.scale.set(modelScale, modelScale, modelScale);
     this.instantTrackingHeadset.rotation.set(0, 0, 0);
+    console.log(headsetModel, headsetModel.includes('Flamingo'));
     /*
         this.adaptor.position.set(10, 0.2, 0);
         this.adaptor.scale.set(20, 20, 20);
@@ -103,35 +92,15 @@ class Models {
   private setupVisibility() {
     // Set up visibility for our models our instant tracking scene
     this.instantTrackingHeadset.visible = true;
-    this.adaptor.visible = false;
-    this.controller.visible = false;
-    this.anchor.visible = false;
-    // Set up visibility for our models our face tracking scene
-    this.faceTrackingHeadset.visible = false;
-    this.phone.visible = false;
   }
 
   private setupMaterials() {
     // Add the plasticy material to the relevant meshes
     ((this.instantTrackingHeadset.getObjectByName('plastictransparent2') as THREE.Mesh).material) = meshPlasticTransparentMaterial;
-    ((this.faceTrackingHeadset.getObjectByName('plastictransparent2') as THREE.Mesh).material) = meshPlasticTransparentMaterialFace;
-    ((this.adaptor.getObjectByName('polySurface128') as THREE.Mesh).material) = meshPlasticTransparentMaterial;
   }
 
   private setupShadows() {
     this.instantTrackingHeadset.traverse((node: any) => {
-      if (node.isMesh) node.castShadow = true;
-    });
-
-    this.adaptor.traverse((node: any) => {
-      if (node.isMesh) node.castShadow = true;
-    });
-
-    this.controller.traverse((node: any) => {
-      if (node.isMesh) node.castShadow = true;
-    });
-
-    this.anchor.traverse((node: any) => {
       if (node.isMesh) node.castShadow = true;
     });
   }

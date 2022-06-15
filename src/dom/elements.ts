@@ -197,14 +197,12 @@ class DocumentManager {
   */
     DocumentManager.resetBtn?.addEventListener('click', () => {
       // Start the button sound
-      this.world.soundManager.defaultButtonSoundPlay();
       // Take us to the first slide
       // this.AnimationHandler.splide.go(0);
     });
 
     DocumentManager.launchBtn?.addEventListener('click', () => {
       // Start the button sound
-      this.world.soundManager.defaultButtonSoundPlay();
 
       // In order to use camera and motion data, we need to ask the users for permission
       // The Zappar library comes with some UI to help with that, so let's use it
