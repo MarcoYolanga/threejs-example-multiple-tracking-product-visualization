@@ -27,6 +27,7 @@ class Experience {
   private DOM = new DocumentManager(this.world, AnimationHandler);
 
   public constructor() {
+    console.log('Ahhh');
     this.world.load().then(() => {
       this.renderer.setAnimationLoop(
         () => this.render(),

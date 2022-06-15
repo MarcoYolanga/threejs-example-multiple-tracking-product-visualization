@@ -32,7 +32,7 @@ module.exports = {
     static: './dist/',
     historyApiFallback: true,
     server: 'https',
-    host: '0.0.0.0',
+    host: 'localhost',
     hot: true,
     open: true,
   },

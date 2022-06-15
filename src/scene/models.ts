@@ -5,7 +5,9 @@ import * as THREE from 'three';
 import * as ZapparThree from '@zappar/zappar-threejs';
 import AsyncGLTFLoader from '../util/asyncGLTF';
 
-import headsetModel from '../../assets/headset.glb';
+// import headsetModel from '../../assets/headset.glb';
+import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
+
 import lensModel from '../../assets/lensgltf.glb';
 import controllerModel from '../../assets/controller.glb';
 import anchorModel from '../../assets/anchor.glb';
@@ -54,7 +56,7 @@ class Models {
 
     this.setupVisibility();
     this.setupTransforms();
-    this.setupMaterials();
+    // this.setupMaterials();
     this.setupShadows();
   }
 
