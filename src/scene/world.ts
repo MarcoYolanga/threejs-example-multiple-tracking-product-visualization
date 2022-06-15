@@ -11,9 +11,9 @@ import ZapparSharing from '@zappar/sharing';
 import getLights from './lights';
 import Models from './models';
 import SoundManager from './sound';
+import DocumentManager from '../dom/elements';
 
 class World {
-
   public scene: THREE.Scene = new THREE.Scene();
 
   public camera: ZapparThree.Camera = new ZapparThree.Camera();
@@ -107,6 +107,8 @@ class World {
 
     // Add our instant tracker group into the ThreeJS scene
     this.scene.add(this.trackerGroups.face, this.trackerGroups.instant);
+
+    this.setupAnimationSelector();
   }
 
   private setupRenderer() {
@@ -141,13 +143,29 @@ class World {
     return this.models.instantTrackingHeadsetAnimations;
   }
 
+  public currentAnimation: number = 0
+
   public setAnimation(index: number) {
     const animations = this.getAnimations();
     if (typeof animations[index] !== 'undefined') {
+      this.models.instantTrackingHeadsetMixer.stopAllAction();
       this.models.instantTrackingHeadsetMixer.clipAction(animations[index]).play();
+      this.currentAnimation = index;
     } else {
       console.error(`No animation ${index}`);
     }
+  }
+
+  public setupAnimationSelector() {
+    const selected = this.currentAnimation;
+    const animations = this.getAnimations();
+    DocumentManager.changeAnimationUI.innerHTML = animations.map((animation, i) => {
+      const sel: string = selected === i ? 'selected' : '';
+      return `<option ${sel} value="${i}">${animation.name}</option>`;
+    }).join('\n');
+    const showSelector = animations.length > 1;
+    DocumentManager.changeAnimationUI.classList.toggle('hidden', !showSelector);
+    DocumentManager.changeAnimationUI.classList.toggle('visible', showSelector);
   }
 
   private onResize() {
@@ -171,11 +189,11 @@ class World {
     });
   }
 
-  public recorder: ZapparVideoRecorder.VideoRecorder|null = null
+  public recorder: ZapparVideoRecorder.VideoRecorder | null = null
 
-  public isRecording: Boolean = false
+  public isRecording: boolean = false
 
-  public takeVideo() {
+  public takeVideo():boolean {
     if (this.isRecording) {
       this.recorder?.stop();
       console.log('Finished recording');
@@ -184,6 +202,7 @@ class World {
       console.log('Started recording');
     }
     this.isRecording = !this.isRecording;
+    return this.isRecording;
   }
 
   public enableEnvironmentMap(enable: boolean = true) {

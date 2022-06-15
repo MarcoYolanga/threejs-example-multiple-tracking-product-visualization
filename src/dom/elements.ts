@@ -20,6 +20,8 @@ class DocumentManager {
 
   private static takePhotoUI: HTMLElement = document.getElementById('zappar-take-photo-ui')!;
 
+  public static changeAnimationUI: any = document.getElementById('change-animation-ui')!;
+
   private static takeVideoUI: HTMLElement = document.getElementById('zappar-take-video-ui')!;
 
   private static cameraFlipUI: HTMLElement = document.getElementById('zappar-camera-flip-ui')!;
@@ -154,7 +156,10 @@ class DocumentManager {
       this.world.takeSnapshot();
     });
     DocumentManager.takeVideoUI?.addEventListener('click', () => {
-      this.world.takeVideo();
+      DocumentManager.takeVideoUI.classList.toggle('recording', this.world.takeVideo());
+    });
+    DocumentManager.changeAnimationUI?.addEventListener('change', () => {
+      this.world.setAnimation(DocumentManager.changeAnimationUI.value);
     });
 
     /*

@@ -119,7 +119,7 @@ canvas {
     width:100%;
 }
 #zappar-placement-ui,
-#zappar-replacement-ui, #zappar-camera-flip-ui, #zappar-take-photo-ui, #zappar-take-video-ui {
+#zappar-replacement-ui, #zappar-camera-flip-ui, #zappar-take-photo-ui, #zappar-take-video-ui, #change-animation-ui {
     margin:  0 auto 2em;
     width: 200px;
     background-color: rgba(0, 0, 0, 0.8);
@@ -169,7 +169,7 @@ canvas {
     position: relative;
 }
 
-#reset-btn, #zappar-replacement-ui, #zappar-camera-flip-ui, #zappar-take-photo-ui, #zappar-take-video-ui {
+#reset-btn, #zappar-replacement-ui, #zappar-camera-flip-ui, #zappar-take-photo-ui, #zappar-take-video-ui, #change-animation-ui {
     position: fixed;
     top: 0;
     left: auto;
@@ -202,7 +202,18 @@ canvas {
     left: 155px;
     top: 5px;
 }
-
+#change-animation-ui {
+    padding: 0;
+    margin: 0;
+    width: auto;
+    height: auto;
+    left: 205px;
+    top: 5px;
+    background: black;
+}
+#zappar-take-video-ui.recording{
+    background: red;
+}
 #back-btn {
     position: absolute;
     width: 44px;
