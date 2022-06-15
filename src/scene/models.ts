@@ -1,3 +1,4 @@
+/* eslint-disable import/newline-after-import */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
@@ -14,11 +15,16 @@ import phoneModel from '../../assets/phone.glb';
 */
 import meshPlasticTransparentMaterial from '../materials/meshPlasticTransparent';
 import meshPlasticTransparentMaterialFace from '../materials/meshPlasticTransparentFace';
-// import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
+
+/*
+import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
+const modelScale = 0.6;
+const modelY = -0.6;
+*/
+
 import headsetModel from '../../assets/Flamingo.glb';
-
 const modelScale = 0.01;
-
+const modelY = 0;
 
 class Models {
   public instantTrackingHeadset!: THREE.Object3D;
@@ -61,10 +67,9 @@ class Models {
   public setupTransforms() {
     // Set up transforms for our models our instant tracking scene
 
-    this.instantTrackingHeadset.position.set(0, -0.6, 0);
+    this.instantTrackingHeadset.position.set(0, modelY, 0);
     this.instantTrackingHeadset.scale.set(modelScale, modelScale, modelScale);
     this.instantTrackingHeadset.rotation.set(0, 0, 0);
-    console.log(headsetModel, headsetModel.includes('Flamingo'));
     /*
         this.adaptor.position.set(10, 0.2, 0);
         this.adaptor.scale.set(20, 20, 20);
