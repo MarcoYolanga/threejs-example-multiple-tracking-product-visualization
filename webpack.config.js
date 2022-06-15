@@ -32,7 +32,7 @@ module.exports = {
     static: './dist/',
     historyApiFallback: true,
     server: 'https',
-    host: 'localhost',
+    host: '192.168.0.105',
     hot: true,
     open: true,
   },
@@ -43,7 +43,11 @@ module.exports = {
         test: /\.(sa|sc|c)ss$/,
         use: ['style-loader', 'css-loader'],
       },
-
+      {
+        test: /videorecorder\.wasm$/,
+        type: 'javascript/auto',
+        loader: 'file-loader',
+      },
       {
         test: /\.(zpt|png|gif|glb|gltf|jpe?g|ogg|mp3|obj|fbx|wav|ttf|fnf|woff|stl|mp4|hdr|webm)$/,
         use: [{

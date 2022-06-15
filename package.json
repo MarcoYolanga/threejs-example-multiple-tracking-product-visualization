@@ -11,6 +11,7 @@
   "author": "Zappar Limited",
   "license": "Proprietary",
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/hammerjs": "^2.0.40",
     "@types/node": "^17.0.16",
     "@types/three": "^0.134.0",
@@ -22,6 +23,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "file-loader": "^6.2.0",
+    "file-saver": "^2.0.5",
     "gh-pages": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^2.0.0",
@@ -34,8 +36,10 @@
   "dependencies": {
     "@splidejs/splide": "^3.6.4",
     "@zappar/sharing": "^1.1.2",
+    "@zappar/video-recorder": "^0.1.22",
     "@zappar/webgl-snapshot": "^1.0.1",
     "@zappar/zappar-threejs": "^2.0.0-beta.10",
+    "downloadjs": "^1.4.7",
     "gsap": "^3.8.0",
     "hammerjs": "^2.0.8",
     "three": "^0.128.0"

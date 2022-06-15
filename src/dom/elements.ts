@@ -4,29 +4,31 @@ import * as ZapparThree from '@zappar/zappar-threejs';
 import World from '../scene/world';
 
 class DocumentManager {
-  private static loadingTextScene:HTMLElement = document.getElementById('loading-text-section')!;
+  private static loadingTextScene: HTMLElement = document.getElementById('loading-text-section')!;
 
-  private static splashScreenScene:HTMLElement = document.getElementById('splash-screen-scene')!;
+  private static splashScreenScene: HTMLElement = document.getElementById('splash-screen-scene')!;
 
-  private static instantTrackingScene:HTMLElement = document.getElementById('instant-tracking-scene')!;
+  private static instantTrackingScene: HTMLElement = document.getElementById('instant-tracking-scene')!;
 
-  private static faceTrackingScene:HTMLElement = document.getElementById('face-tracking-scene')!;
+  private static faceTrackingScene: HTMLElement = document.getElementById('face-tracking-scene')!;
 
-  private static launchBtn:HTMLElement = document.getElementById('launch-btn')!;
+  private static launchBtn: HTMLElement = document.getElementById('launch-btn')!;
 
-  private static placementUI:HTMLElement = document.getElementById('zappar-placement-ui')!;
+  private static placementUI: HTMLElement = document.getElementById('zappar-placement-ui')!;
 
-  private static replacementUI:HTMLElement = document.getElementById('zappar-replacement-ui')!;
+  private static replacementUI: HTMLElement = document.getElementById('zappar-replacement-ui')!;
 
-  private static resetBtn:HTMLElement = document.getElementById('reset-btn')!;
+  private static cameraFlipUI: HTMLElement = document.getElementById('zappar-camera-flip-ui')!;
 
-  private static tryOnBtn:HTMLElement = document.getElementById('try-on-btn')!;
+  private static resetBtn: HTMLElement = document.getElementById('reset-btn')!;
 
-  private static backBtn:HTMLElement = document.getElementById('back-btn')!;
+  // private static tryOnBtn:HTMLElement = document.getElementById('try-on-btn')!;
 
-  private static snapshotBtn:HTMLElement = document.getElementById('snapshot-btn')!;
+  private static backBtn: HTMLElement = document.getElementById('back-btn')!;
 
-  private static phoneToggleBtn:HTMLElement = document.getElementById('phone-toggle-btn')!;
+  private static snapshotBtn: HTMLElement = document.getElementById('snapshot-btn')!;
+
+  private static phoneToggleBtn: HTMLElement = document.getElementById('phone-toggle-btn')!;
 
   constructor(private world: World, private AnimationHandler: any) {
     window.onload = () => {
@@ -37,7 +39,7 @@ class DocumentManager {
     this.compatibilityCheck();
   }
 
-  public compatibilityCheck():void {
+  public compatibilityCheck(): void {
     // The SDK is supported on many different browsers, but there are some that
     // don't provide camera access. This function detects if the browser is supported
     // For more information on support, check out the readme over at
@@ -68,7 +70,7 @@ class DocumentManager {
     }
   }
 
-  public faceTrackingState():void {
+  public faceTrackingState(): void {
     DocumentManager.instantTrackingScene.classList.remove('visible');
     DocumentManager.instantTrackingScene.classList.add('hidden');
 
@@ -81,7 +83,7 @@ class DocumentManager {
     DocumentManager.faceTrackingScene.classList.add('visible');
   }
 
-  public instantTrackingState():void {
+  public instantTrackingState(): void {
     // Disable face tracking and hide the group
     DocumentManager.faceTrackingScene.classList.remove('visible');
     DocumentManager.faceTrackingScene.classList.add('hidden');
@@ -91,12 +93,14 @@ class DocumentManager {
     DocumentManager.replacementUI.classList.add('hidden');
     DocumentManager.placementUI.classList.remove('hidden');
     DocumentManager.placementUI.classList.add('visible');
+    DocumentManager.cameraFlipUI.classList.remove('hidden');
+    DocumentManager.cameraFlipUI.classList.add('visible');
 
     DocumentManager.instantTrackingScene.classList.remove('hidden');
     DocumentManager.instantTrackingScene.classList.add('visible');
   }
 
-  public togglePhoneUI(showPhone: boolean):void {
+  public togglePhoneUI(showPhone: boolean): void {
     if (!showPhone) {
       DocumentManager.phoneToggleBtn.classList.remove('half-opacity');
       DocumentManager.phoneToggleBtn.classList.add('full-opacity');
@@ -106,7 +110,7 @@ class DocumentManager {
     }
   }
 
-  public launchButtonPressed() : void {
+  public launchButtonPressed(): void {
     DocumentManager.loadingTextScene.style.display = 'flex';
     DocumentManager.instantTrackingScene.style.display = 'block';
 
@@ -114,14 +118,15 @@ class DocumentManager {
     DocumentManager.splashScreenScene.classList.add('hidden');
   }
 
-  public hideLaunchScreen() : void {
+  public hideLaunchScreen(): void {
     DocumentManager.splashScreenScene.style.display = 'none';
   }
 
   public initialiseButtons(
-    placement: ()=> void,
-    flipCamera: ()=> void,
+    placement: () => void,
+    flipCamera: () => void,
     togglePhone: () => void,
+    realFlipCamera: () => void,
     onPermissionGranted: () => void,
   ) {
     /*
@@ -133,13 +138,18 @@ class DocumentManager {
     DocumentManager.replacementUI?.addEventListener('click', () => {
       placement();
     });
+    DocumentManager.cameraFlipUI?.addEventListener('click', () => {
+      realFlipCamera();
+    });
 
     /*
   * Try on button
   */
+    /*
     DocumentManager.tryOnBtn?.addEventListener('click', () => {
       flipCamera();
     });
+    */
 
     /*
   * Back Button
@@ -169,7 +179,7 @@ class DocumentManager {
       // Start the button sound
       this.world.soundManager.defaultButtonSoundPlay();
       // Take us to the first slide
-      this.AnimationHandler.splide.go(0);
+      // this.AnimationHandler.splide.go(0);
     });
 
     DocumentManager.launchBtn?.addEventListener('click', () => {
@@ -193,7 +203,7 @@ class DocumentManager {
     });
   }
 
-  public toggleResetButton(active: boolean) : void {
+  public toggleResetButton(active: boolean): void {
     if (active) {
       DocumentManager.resetBtn.classList.remove('hidden');
       DocumentManager.resetBtn.classList.add('visible');

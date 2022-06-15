@@ -5,29 +5,32 @@
 
 import './index.sass';
 import './splide.min.css';
+import * as ZapparVideoRecorder from '@zappar/video-recorder';
+import { saveAs } from 'file-saver';
 import World from './scene/world';
 import DocumentManager from './dom/elements';
 import Renderer from './scene/renderer';
-import AnimationHandler from './scene/animator';
+
+
+// import AnimationHandler from './scene/animator';
 /*
  * Common variables
 */
 
 class Experience {
-  private instantTrackerPlaced:boolean = false;
+  private instantTrackerPlaced: boolean = false;
 
-  private userFacing:boolean = false;
+  private userFacing: boolean = false;
 
-  private showPhone:boolean = false;
+  private showPhone: boolean = false;
 
-  private renderer = new Renderer();
+  public renderer = new Renderer();
 
   private world = new World(this.renderer);
 
-  private DOM = new DocumentManager(this.world, AnimationHandler);
+  private DOM = new DocumentManager(this.world, /* AnimationHandler */ undefined);
 
   public constructor() {
-    console.log('Ahhh');
     this.world.load().then(() => {
       this.renderer.setAnimationLoop(
         () => this.render(),
@@ -36,6 +39,7 @@ class Experience {
         () => this.togglePlacement(),
         () => this.flipCamera(),
         () => this.togglePhone(),
+        () => this.realFlipCamera(),
         () => this.startInstantTracking(),
       );
     });
@@ -49,7 +53,7 @@ class Experience {
       instantTrackingHeadset, adaptor, controller, anchor,
     } = this.world.models;
 
-    AnimationHandler.splide.on('move', () => AnimationHandler.switchSlide(this.world, this.DOM));
+    // AnimationHandler.splide.on('move', () => AnimationHandler.switchSlide(this.world, this.DOM));
     // Disable face tracking and hide the group
     this.world.trackers.face.enabled = false;
     this.world.trackerGroups.face.visible = false;
@@ -74,7 +78,9 @@ class Experience {
   /*
   * Initialise face-tracking scene function
   */
-  private startFaceTracking():void {
+  private startFaceTracking(): void {
+    return this.startInstantTracking();
+    /*
     AnimationHandler.splide.off('move');
     // Disable instant world tracking and hide the group
     this.world.trackers.instant.enabled = false;
@@ -86,12 +92,13 @@ class Experience {
     this.userFacing = true;
     // Now enable our face tracking and show the UIdefaultButtonSoundPlay
     this.world.trackers.face.enabled = true;
+    */
   }
 
   /*
   * Flip Camera function
   */
-  private flipCamera():void {
+  private flipCamera(): void {
     // Start the button sound
     this.world.soundManager.defaultButtonSoundPlay();
     this.world.enableEnvironmentMap(this.userFacing);
@@ -106,7 +113,7 @@ class Experience {
   /*
   * Placement button function
   */
-  private togglePlacement():void {
+  private togglePlacement(): void {
     // When the experience loads we'll let the user choose a place in their room for
     // the content to appear using setAnchorPoseFromCameraOffset (see below)
     // The user can confirm the location by tapping on the screen
@@ -118,10 +125,17 @@ class Experience {
     this.instantTrackerPlaced = !this.instantTrackerPlaced;
   }
 
+  private cameraFlipStatus: boolean = false;
+
+  private realFlipCamera(): void {
+    this.world.camera.start(!this.cameraFlipStatus);
+    this.cameraFlipStatus = !this.cameraFlipStatus;
+  }
+
   /*
   * Toggle phone function
   */
-  private togglePhone():void {
+  private togglePhone(): void {
     // Start the button sound
     this.world.soundManager.defaultButtonSoundPlay();
     this.DOM.togglePhoneUI(this.showPhone);
@@ -133,8 +147,8 @@ class Experience {
   // Use a function to render our scene as usual
   public render() {
     if (!this.instantTrackerPlaced) {
-    // If the user hasn't chosen a place in their room yet, update the instant tracker
-    // to be directly in front of the user
+      // If the user hasn't chosen a place in their room yet, update the instant tracker
+      // to be directly in front of the user
       this.world.trackerGroups.instant.setAnchorPoseFromCameraOffset(0, 0, -2);
     }
     this.world.update();
@@ -144,5 +158,26 @@ class Experience {
 }
 
 const experience = new Experience();
+
+ZapparVideoRecorder.createCanvasVideoRecorder(experience.renderer.domElement, {
+  // Options
+}).then((recorder) => {
+  // Use recorder to control recording
+
+  console.log(recorder);
+  recorder.onComplete.bind((result) => {
+    // Use result to access the final video file
+    saveAs(result.blob, 'ciao.mp4');
+  });
+
+  /*
+  setTimeout(() => {
+    recorder.start();
+    setTimeout(() => {
+      recorder.stop();
+    }, 5000);
+  }, 5000);
+  */
+});
 
 console.log(experience);

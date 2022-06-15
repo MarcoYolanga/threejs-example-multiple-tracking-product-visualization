@@ -6,7 +6,7 @@ import * as ZapparThree from '@zappar/zappar-threejs';
 import AsyncGLTFLoader from '../util/asyncGLTF';
 
 // import headsetModel from '../../assets/headset.glb';
-import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
+import headsetModel from '../../assets/Soldier.glb';
 
 import lensModel from '../../assets/lensgltf.glb';
 import controllerModel from '../../assets/controller.glb';
@@ -47,6 +47,7 @@ class Models {
       [headsetModel, lensModel, controllerModel, anchorModel, headsetModel, phoneModel],
       this.loadingManager,
     );
+    console.log(_instantTrackingHeadset);
     this.instantTrackingHeadset = _instantTrackingHeadset;
     this.adaptor = _adaptor;
     this.controller = _controller;
