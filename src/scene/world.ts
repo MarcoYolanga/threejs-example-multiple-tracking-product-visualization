@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-useless-constructor */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
@@ -9,9 +11,9 @@ import Models from './models';
 import SoundManager from './sound';
 
 class World {
-  public scene :THREE.Scene = new THREE.Scene();
+  public scene: THREE.Scene = new THREE.Scene();
 
-  public camera : ZapparThree.Camera = new ZapparThree.Camera();
+  public camera: ZapparThree.Camera = new ZapparThree.Camera();
 
   private environmentMap = new ZapparThree.CameraEnvironmentMap();
 
@@ -19,7 +21,25 @@ class World {
 
   public soundManager = new SoundManager();
 
-  public onLoaded = (callback: ()=> void) => callback();
+  public onLoaded = (callback: () => void) => callback();
+
+  public mixers: Array<THREE.AnimationMixer> = [];
+
+  public clock: THREE.Clock = new THREE.Clock(true);
+
+  public animate(self: World) {
+    requestAnimationFrame(() => {
+      self.animate(self);
+    });
+
+    const delta = self.clock.getDelta();
+
+    for (const mixer of self.mixers) {
+      mixer.update(delta);
+    }
+
+    self.renderer.render(self.scene, self.camera);
+  }
 
   // ZapparThree provides a LoadingManager that shows a progress bar while
   // the assets are downloaded. You can use this if it's helpful, or use
@@ -38,8 +58,11 @@ class World {
     face: new ZapparThree.FaceAnchorGroup(this.camera, this.trackers.face),
   }
 
-  constructor(public renderer : THREE.WebGLRenderer) {
+  public renderer: THREE.WebGLRenderer;
+
+  constructor(public _renderer: THREE.WebGLRenderer) {
     // Store a reference to the renderer.
+    this.renderer = _renderer;
   }
 
   public async load() {
@@ -76,6 +99,24 @@ class World {
     this.trackerGroups.instant.add(instantTrackingHeadset, adaptor, controller, anchor);
 
     this.trackerGroups.face.add(faceTrackingHeadset, phone);
+
+    this.mixers.push(this.models.instantTrackingHeadsetMixer);
+
+    this.setAnimation(0);
+    this.animate(this);
+  }
+
+  public getAnimations() {
+    return this.models.instantTrackingHeadsetAnimations;
+  }
+
+  public setAnimation(index: number) {
+    const animations = this.getAnimations();
+    if (typeof animations[index] !== 'undefined') {
+      this.models.instantTrackingHeadsetMixer.clipAction(animations[index]).play();
+    } else {
+      console.error(`No animation ${index}`);
+    }
   }
 
   private onResize() {

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /// Zappar for ThreeJS Examples
 /// Instant Tracking 3D Model
 
@@ -10,7 +11,6 @@ import { saveAs } from 'file-saver';
 import World from './scene/world';
 import DocumentManager from './dom/elements';
 import Renderer from './scene/renderer';
-
 
 // import AnimationHandler from './scene/animator';
 /*
@@ -169,15 +169,14 @@ ZapparVideoRecorder.createCanvasVideoRecorder(experience.renderer.domElement, {
     // Use result to access the final video file
     saveAs(result.blob, 'ciao.mp4');
   });
-
   /*
-  setTimeout(() => {
-    recorder.start();
     setTimeout(() => {
-      recorder.stop();
+      recorder.start();
+      setTimeout(() => {
+        recorder.stop();
+      }, 5000);
     }, 5000);
-  }, 5000);
-  */
+    */
 });
 
 console.log(experience);

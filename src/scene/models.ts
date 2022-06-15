@@ -3,10 +3,11 @@
 /* eslint-disable max-len */
 import * as THREE from 'three';
 import * as ZapparThree from '@zappar/zappar-threejs';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import AsyncGLTFLoader from '../util/asyncGLTF';
 
 // import headsetModel from '../../assets/headset.glb';
-import headsetModel from '../../assets/Soldier.glb';
+import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
 
 import lensModel from '../../assets/lensgltf.glb';
 import controllerModel from '../../assets/controller.glb';
@@ -17,6 +18,10 @@ import meshPlasticTransparentMaterialFace from '../materials/meshPlasticTranspar
 
 class Models {
   public instantTrackingHeadset!: THREE.Object3D;
+
+  public instantTrackingHeadsetMixer!: THREE.AnimationMixer;
+
+  public instantTrackingHeadsetAnimations!: Array<any>;
 
   public adaptor!: THREE.Object3D;
 
@@ -33,7 +38,7 @@ class Models {
     new THREE.ShadowMaterial({ opacity: 0.25 }),
   );
 
-  public faceMask= new ZapparThree.HeadMaskMeshLoader(this.loadingManager).load();
+  public faceMask = new ZapparThree.HeadMaskMeshLoader(this.loadingManager).load();
 
   constructor(private loadingManager: THREE.LoadingManager) {
     this.floor.receiveShadow = true;
@@ -42,18 +47,22 @@ class Models {
 
   public async load() {
     const [
-      _instantTrackingHeadset, _adaptor, _controller, _anchor, _faceTrackingHeadset, _phone,
+      _instantTrackingModel, _adaptor, _controller, _anchor, _faceTrackingHeadset, _phone,
     ] = await AsyncGLTFLoader.loadAll(
       [headsetModel, lensModel, controllerModel, anchorModel, headsetModel, phoneModel],
       this.loadingManager,
     );
-    console.log(_instantTrackingHeadset);
-    this.instantTrackingHeadset = _instantTrackingHeadset;
-    this.adaptor = _adaptor;
-    this.controller = _controller;
-    this.anchor = _anchor;
-    this.faceTrackingHeadset = _faceTrackingHeadset;
-    this.phone = _phone;
+    console.log(`Animated model: ${_instantTrackingModel.animations.length} `, _instantTrackingModel);
+
+    this.instantTrackingHeadset = _instantTrackingModel.scene;
+    this.instantTrackingHeadsetMixer = new THREE.AnimationMixer(this.instantTrackingHeadset);
+    this.instantTrackingHeadsetAnimations = _instantTrackingModel.animations;
+
+    this.adaptor = _adaptor.scene;
+    this.controller = _controller.scene;
+    this.anchor = _anchor.scene;
+    this.faceTrackingHeadset = _faceTrackingHeadset.scene;
+    this.phone = _phone.scene;
 
     this.setupVisibility();
     this.setupTransforms();
@@ -90,7 +99,7 @@ class Models {
   }
 
   private setupVisibility() {
-  // Set up visibility for our models our instant tracking scene
+    // Set up visibility for our models our instant tracking scene
     this.instantTrackingHeadset.visible = true;
     this.adaptor.visible = false;
     this.controller.visible = false;
@@ -108,19 +117,19 @@ class Models {
   }
 
   private setupShadows() {
-    this.instantTrackingHeadset.traverse((node:any) => {
+    this.instantTrackingHeadset.traverse((node: any) => {
       if (node.isMesh) node.castShadow = true;
     });
 
-    this.adaptor.traverse((node:any) => {
+    this.adaptor.traverse((node: any) => {
       if (node.isMesh) node.castShadow = true;
     });
 
-    this.controller.traverse((node:any) => {
+    this.controller.traverse((node: any) => {
       if (node.isMesh) node.castShadow = true;
     });
 
-    this.anchor.traverse((node:any) => {
+    this.anchor.traverse((node: any) => {
       if (node.isMesh) node.castShadow = true;
     });
   }

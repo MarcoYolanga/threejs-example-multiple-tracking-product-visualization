@@ -14,7 +14,11 @@ class AsyncGLTFLoader {
     return new Promise((resolve, reject) => {
       AsyncGLTFLoader.gltfLoaderSingleton.load(
         path,
-        (gltf) => resolve(<any>gltf.scene),
+        (gltf) => {
+          // make animation controller
+
+          resolve(<any>gltf);
+        },
         undefined,
         () => reject(new Error('Failed Loading model')),
       );
@@ -23,7 +27,7 @@ class AsyncGLTFLoader {
 
   static loadAll(
     models : string[], loadingManager : THREE.LoadingManager,
-  ) : Promise<THREE.Scene[]> {
+  ) : Promise<any[]> {
     return Promise.all(models.map((model) => AsyncGLTFLoader.load(model, loadingManager)));
   }
 }
