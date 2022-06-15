@@ -69,10 +69,7 @@ class Experience {
     this.DOM.instantTrackingState();
 
     // Reset the position so it's easier to place
-    instantTrackingHeadset.position.y = 0.5;
-    adaptor.position.y = 0.2;
-    controller.position.y = 0.5;
-    anchor.position.y = 0.35;
+    this.world.models.setupTransforms();
   }
 
   /*
