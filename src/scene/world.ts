@@ -5,12 +5,15 @@
 /* eslint-disable no-unused-vars */
 import * as THREE from 'three';
 import * as ZapparThree from '@zappar/zappar-threejs';
+import * as ZapparVideoRecorder from '@zappar/video-recorder';
+import { saveAs } from 'file-saver';
 import ZapparSharing from '@zappar/sharing';
 import getLights from './lights';
 import Models from './models';
 import SoundManager from './sound';
 
 class World {
+
   public scene: THREE.Scene = new THREE.Scene();
 
   public camera: ZapparThree.Camera = new ZapparThree.Camera();
@@ -63,6 +66,34 @@ class World {
   constructor(public _renderer: THREE.WebGLRenderer) {
     // Store a reference to the renderer.
     this.renderer = _renderer;
+
+    const self = this;
+
+    ZapparVideoRecorder.createCanvasVideoRecorder(this.renderer.domElement, {
+      // Options
+    }).then((recorder) => {
+      // Use recorder to control recording
+
+      // console.log(recorder);
+      recorder.onComplete.bind((result) => {
+        // Use result to access the final video file
+        // saveAs(result.blob, 'ciao.mp4');
+        result.asDataURL().then((dataUrl) => {
+          ZapparSharing({
+            data: dataUrl,
+          });
+        });
+      });
+      self.recorder = recorder;
+      /*
+        setTimeout(() => {
+          recorder.start();
+          setTimeout(() => {
+            recorder.stop();
+          }, 5000);
+        }, 5000);
+        */
+    });
   }
 
   public async load() {
@@ -138,6 +169,21 @@ class World {
     ZapparSharing({
       data: url,
     });
+  }
+
+  public recorder: ZapparVideoRecorder.VideoRecorder|null = null
+
+  public isRecording: Boolean = false
+
+  public takeVideo() {
+    if (this.isRecording) {
+      this.recorder?.stop();
+      console.log('Finished recording');
+    } else {
+      this.recorder?.start();
+      console.log('Started recording');
+    }
+    this.isRecording = !this.isRecording;
   }
 
   public enableEnvironmentMap(enable: boolean = true) {

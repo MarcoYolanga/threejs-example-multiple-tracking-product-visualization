@@ -18,6 +18,10 @@ class DocumentManager {
 
   private static replacementUI: HTMLElement = document.getElementById('zappar-replacement-ui')!;
 
+  private static takePhotoUI: HTMLElement = document.getElementById('zappar-take-photo-ui')!;
+
+  private static takeVideoUI: HTMLElement = document.getElementById('zappar-take-video-ui')!;
+
   private static cameraFlipUI: HTMLElement = document.getElementById('zappar-camera-flip-ui')!;
 
   private static resetBtn: HTMLElement = document.getElementById('reset-btn')!;
@@ -96,6 +100,11 @@ class DocumentManager {
     DocumentManager.cameraFlipUI.classList.remove('hidden');
     DocumentManager.cameraFlipUI.classList.add('visible');
 
+    DocumentManager.takePhotoUI.classList.remove('hidden');
+    DocumentManager.takePhotoUI.classList.add('visible');
+    DocumentManager.takeVideoUI.classList.remove('hidden');
+    DocumentManager.takeVideoUI.classList.add('visible');
+
     DocumentManager.instantTrackingScene.classList.remove('hidden');
     DocumentManager.instantTrackingScene.classList.add('visible');
   }
@@ -140,6 +149,12 @@ class DocumentManager {
     });
     DocumentManager.cameraFlipUI?.addEventListener('click', () => {
       realFlipCamera();
+    });
+    DocumentManager.takePhotoUI?.addEventListener('click', () => {
+      this.world.takeSnapshot();
+    });
+    DocumentManager.takeVideoUI?.addEventListener('click', () => {
+      this.world.takeVideo();
     });
 
     /*

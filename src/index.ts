@@ -6,8 +6,6 @@
 
 import './index.sass';
 import './splide.min.css';
-import * as ZapparVideoRecorder from '@zappar/video-recorder';
-import { saveAs } from 'file-saver';
 import World from './scene/world';
 import DocumentManager from './dom/elements';
 import Renderer from './scene/renderer';
@@ -26,7 +24,7 @@ class Experience {
 
   public renderer = new Renderer();
 
-  private world = new World(this.renderer);
+  public world = new World(this.renderer);
 
   private DOM = new DocumentManager(this.world, /* AnimationHandler */ undefined);
 
@@ -155,25 +153,5 @@ class Experience {
 }
 
 const experience = new Experience();
-
-ZapparVideoRecorder.createCanvasVideoRecorder(experience.renderer.domElement, {
-  // Options
-}).then((recorder) => {
-  // Use recorder to control recording
-
-  console.log(recorder);
-  recorder.onComplete.bind((result) => {
-    // Use result to access the final video file
-    saveAs(result.blob, 'ciao.mp4');
-  });
-  /*
-    setTimeout(() => {
-      recorder.start();
-      setTimeout(() => {
-        recorder.stop();
-      }, 5000);
-    }, 5000);
-    */
-});
 
 console.log(experience);
