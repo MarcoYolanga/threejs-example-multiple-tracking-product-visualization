@@ -4,7 +4,6 @@
 /* eslint-disable max-len */
 import * as THREE from 'three';
 import * as ZapparThree from '@zappar/zappar-threejs';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import AsyncGLTFLoader from '../util/asyncGLTF';
 
 /*
@@ -22,10 +21,16 @@ const modelScale = 0.6;
 const modelY = -0.6;
 */
 
+
+import headsetModel from '../../assets/SM_Kappa_Futur_Animation.glb';
+const modelScale = 0.6;
+const modelY = -0.6;
+
+/*
 import headsetModel from '../../assets/Flamingo.glb';
 const modelScale = 0.01;
 const modelY = 0;
-
+*/
 class Models {
   public instantTrackingHeadset!: THREE.Object3D;
 

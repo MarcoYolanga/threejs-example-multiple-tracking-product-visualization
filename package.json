@@ -42,6 +42,7 @@
     "file-saver": "^2.0.5",
     "gsap": "^3.8.0",
     "hammerjs": "^2.0.8",
-    "three": "^0.128.0"
+    "three": "^0.128.0",
+    "three-dracoloader": "^0.0.1"
   }
 }
