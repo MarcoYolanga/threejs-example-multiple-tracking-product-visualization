@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-useless-constructor */
@@ -11,6 +12,16 @@ import ZapparSharing from '@zappar/sharing';
 import getLights from './lights';
 import Models from './models';
 import DocumentManager from '../dom/elements';
+
+function getQueryVariable(variable: string): any {
+  const query = window.location.search.substring(1);
+  const vars = query.split('&');
+  for (let i = 0; i < vars.length; i += 1) {
+    const pair = vars[i].split('=');
+    if (pair[0] === variable) { return pair[1]; }
+  }
+  return (false);
+}
 
 class World {
   public scene: THREE.Scene = new THREE.Scene();
@@ -130,7 +141,16 @@ class World {
 
     this.mixers.push(this.models.instantTrackingHeadsetMixer);
 
-    this.setAnimation(0);
+    let wantedAnim = parseInt(getQueryVariable('anim'), 10);
+    if (Number.isNaN(wantedAnim)) {
+      wantedAnim = 0;
+    }
+    if (!this.setAnimation(wantedAnim)) {
+      if (wantedAnim !== 0) {
+        console.log('Fallback to animation 0');
+        this.setAnimation(0);
+      }
+    }
     this.animate(this);
   }
 
@@ -146,9 +166,11 @@ class World {
       this.models.instantTrackingHeadsetMixer.stopAllAction();
       this.models.instantTrackingHeadsetMixer.clipAction(animations[index]).play();
       this.currentAnimation = index;
-    } else {
-      console.error(`No animation ${index}`);
+      return true;
     }
+
+    console.error(`No animation ${index}`);
+    return false;
   }
 
   public setupAnimationSelector() {
@@ -187,7 +209,7 @@ class World {
 
   public isRecording: boolean = false
 
-  public takeVideo():boolean {
+  public takeVideo(): boolean {
     if (this.isRecording) {
       this.recorder?.stop();
       console.log('Finished recording');
