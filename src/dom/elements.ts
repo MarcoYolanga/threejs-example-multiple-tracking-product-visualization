@@ -24,7 +24,9 @@ class DocumentManager {
 
   private static takeVideoUI: HTMLElement = document.getElementById('zappar-take-video-ui')!;
 
-  private static cameraFlipUI: HTMLElement = document.getElementById('zappar-camera-flip-ui')!;
+  private static goBackUI: HTMLElement = document.getElementById('go-back-ui')!;
+
+  // private static cameraFlipUI: HTMLElement = document.getElementById('zappar-camera-flip-ui')!;
 
   private static resetBtn: HTMLElement = document.getElementById('reset-btn')!;
 
@@ -99,13 +101,16 @@ class DocumentManager {
     DocumentManager.replacementUI.classList.add('hidden');
     DocumentManager.placementUI.classList.remove('hidden');
     DocumentManager.placementUI.classList.add('visible');
-    DocumentManager.cameraFlipUI.classList.remove('hidden');
-    DocumentManager.cameraFlipUI.classList.add('visible');
+    // DocumentManager.cameraFlipUI.classList.remove('hidden');
+    // DocumentManager.cameraFlipUI.classList.add('visible');
 
     DocumentManager.takePhotoUI.classList.remove('hidden');
     DocumentManager.takePhotoUI.classList.add('visible');
     DocumentManager.takeVideoUI.classList.remove('hidden');
     DocumentManager.takeVideoUI.classList.add('visible');
+
+    DocumentManager.goBackUI.classList.remove('hidden');
+    DocumentManager.goBackUI.classList.add('visible');
 
     DocumentManager.instantTrackingScene.classList.remove('hidden');
     DocumentManager.instantTrackingScene.classList.add('visible');
@@ -149,9 +154,11 @@ class DocumentManager {
     DocumentManager.replacementUI?.addEventListener('click', () => {
       placement();
     });
+    /*
     DocumentManager.cameraFlipUI?.addEventListener('click', () => {
       realFlipCamera();
     });
+    */
     DocumentManager.takePhotoUI?.addEventListener('click', () => {
       this.world.takeSnapshot();
     });
@@ -160,6 +167,9 @@ class DocumentManager {
     });
     DocumentManager.changeAnimationUI?.addEventListener('change', () => {
       this.world.setAnimation(DocumentManager.changeAnimationUI.value);
+    });
+    DocumentManager.goBackUI?.addEventListener('click', () => {
+      window.location.href = 'https://kappafuturfestival.it/augmented_reality/';
     });
 
     /*

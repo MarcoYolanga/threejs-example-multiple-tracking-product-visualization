@@ -15,20 +15,21 @@ import phoneModel from '../../assets/phone.glb';
 import meshPlasticTransparentMaterial from '../materials/meshPlasticTransparent';
 import meshPlasticTransparentMaterialFace from '../materials/meshPlasticTransparentFace';
 
-/*
-import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
+// import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
+const headsetModel = 'https://morettialberto.it/test-viewer-widget/viewer/product-model/Queen_Futur_Animation_Low.glb';
 const modelScale = 0.6;
-const modelY = -0.6;
-*/
+const modelY = -0.5;
 
 /*
 import headsetModel from '../../assets/SM_Kappa_Futur_Animation.glb';
 const modelScale = 0.6;
 const modelY = -0.6;
 */
-import headsetModel from '../../assets/Flamingo.glb';
+/*
+ import headsetModel from '../../assets/Flamingo.glb';
 const modelScale = 0.01;
 const modelY = 0;
+*/
 
 class Models {
   public instantTrackingHeadset!: THREE.Object3D;
