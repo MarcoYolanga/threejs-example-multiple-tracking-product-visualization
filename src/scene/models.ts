@@ -66,7 +66,7 @@ class Models {
     this.setupVisibility();
     this.setupTransforms();
     // this.setupMaterials();
-    this.setupShadows();
+    // this.setupShadows();
   }
 
   public setupTransforms() {
