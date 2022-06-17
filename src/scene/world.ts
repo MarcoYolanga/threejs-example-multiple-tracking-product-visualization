@@ -7,7 +7,7 @@
 import * as THREE from 'three';
 import * as ZapparThree from '@zappar/zappar-threejs';
 import * as ZapparVideoRecorder from '@zappar/video-recorder';
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 import ZapparSharing from '@zappar/sharing';
 import getLights from './lights';
 import Models from './models';
@@ -87,9 +87,7 @@ class World {
         // Use result to access the final video file
         // saveAs(result.blob, 'ciao.mp4');
         result.asDataURL().then((dataUrl) => {
-          ZapparSharing({
-            data: dataUrl,
-          });
+          self.customZapparSharing(dataUrl);
         });
       });
       self.recorder = recorder;
@@ -200,9 +198,7 @@ class World {
     const url = canvas!.toDataURL('image/jpeg', 0.8);
 
     // Take snapshot
-    ZapparSharing({
-      data: url,
-    });
+    this.customZapparSharing(url);
   }
 
   public recorder: ZapparVideoRecorder.VideoRecorder | null = null
@@ -268,6 +264,83 @@ class World {
     this.models.faceMask.updateFromFaceAnchorGroup(this.trackerGroups.face);
     // Update Zappar environment map
     this.environmentMap.update(this.renderer, this.camera);
+  }
+
+  public customZapparSharing(dataUrl: string) {
+    // https://docs.zap.works/universal-ar/useful-packages/webgl-sharing/
+    ZapparSharing({
+      data: dataUrl,
+      fileNamePrepend: 'Zappar', // The name of  the file.
+      shareTitle: document.title, // The title for the social share.
+      shareText: document.title, // The body text for the social share.
+      shareUrl: 'https://kappafuturfestival.it/augmented_reality/', // The url for the social share.
+      hideShareButton: false, // Hide the share button.
+    });
+    console.log('ZapparSharing opened, waiting');
+    // posso iniziare a personalizzare solo quando zapworks ha finito di creare l'elemento
+    const customize = () => {
+      // personalizzo l'ui del zappar-sharing
+
+      const container = document.getElementById('ZapparSnapshotContainer')!;
+      try {
+        // pulsanti
+        const saveButton: HTMLElement = document.getElementById('zapparSaveButton')!;
+        saveButton.getElementsByTagName('svg')[0].outerHTML = '<img src="./assets/UI/button-save.png">';
+        let label = document.createElement('DIV');
+        saveButton.appendChild(label);
+        label.outerHTML = '<label class="share-button-label" for="zapparSaveButton">Download</label>';
+        const shareButton: HTMLElement = document.getElementById('zapparShareButton')!;
+        shareButton.getElementsByTagName('svg')[0].outerHTML = '<img src="./assets/UI/button-share.png">';
+
+        label = document.createElement('DIV');
+        shareButton.appendChild(label);
+        label.outerHTML = '<label class="share-button-label" for="zapparShareButton">Share</label>';
+        const closeButton: HTMLElement = document.getElementById('zapparCloseAref')!;
+        closeButton.getElementsByTagName('svg')[0].outerHTML = '<img src="./assets/UI/x-black.png">';
+
+        // cornice
+        const subject: any = container.querySelector('#ZapparPreviewImg, #ZapparPreviewVideo')!;
+        const tripleBorder = document.createElement('DIV');
+        subject.parentElement!.insertBefore(tripleBorder, subject);
+        // eslint-disable-next-line max-len
+        tripleBorder.outerHTML = '<div class="inner-border sharing-frame"><div class="inner-border"><div class="inner-border"></div></div></div>';
+        const innerBorder = subject.parentElement!.querySelector('.inner-border>.inner-border>.inner-border')!;
+        innerBorder.appendChild(subject);
+        subject.style.margin = '0';
+        subject.style.width = '100%';
+      } catch (error) {
+        console.error('Impossibile personalizzare correttamente ZapparSharing', error);
+      }
+
+      // mostro gli elementi solo ora
+      container.classList.add('ready');
+    };
+
+    let tryAnyway:any = setTimeout(() => {
+      tryAnyway = null;
+      customize();
+      console.log('ZapparSharing customized by fallback tryAnyway');
+    }, 3000); // se non riesco a vedere tutti gli elementi entro 3 sec avvia comunque la personalizzazione
+    const checkIfExists = [
+      '#ZapparSnapshotContainer',
+      '#zapparSaveButton',
+      '#zapparShareButton',
+      '#zapparCloseAref',
+      '#ZapparPreviewImg, #ZapparPreviewVideo',
+    ];
+    const observer = setInterval(() => {
+      for (const selector of checkIfExists) {
+        if (document.querySelector(selector) === null) {
+          return;
+        }
+      }
+      if (tryAnyway !== null) { // non ancora passati 3 sec
+        clearTimeout(tryAnyway);
+        customize();
+        console.log('ZapparSharing customized');
+      }
+      clearInterval(observer);
+    }, 100);
   }
 }
 

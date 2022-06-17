@@ -16,7 +16,7 @@ import meshPlasticTransparentMaterial from '../materials/meshPlasticTransparent'
 import meshPlasticTransparentMaterialFace from '../materials/meshPlasticTransparentFace';
 
 // import headsetModel from '../../assets/Queen_Futur_Animation_Low.glb';
-const headsetModel = 'https://morettialberto.it/test-viewer-widget/viewer/product-model/Queen_Futur_Animation_Low.glb';
+const headsetModel = 'https://kappafuturfestival.it/augmented_reality/models/Futur_Animation_04.glb';
 const modelScale = 0.6;
 const modelY = -0.5;
 
@@ -57,7 +57,7 @@ class Models {
       [headsetModel],
       this.loadingManager,
     );
-    console.log(`Animated model: ${_instantTrackingModel.animations.length} `, _instantTrackingModel);
+    // console.log(`Animated model: ${_instantTrackingModel.animations.length} `, _instantTrackingModel);
 
     this.instantTrackingHeadset = _instantTrackingModel.scene;
     this.instantTrackingHeadsetMixer = new THREE.AnimationMixer(this.instantTrackingHeadset);

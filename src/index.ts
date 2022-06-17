@@ -149,5 +149,6 @@ class Experience {
 }
 
 const experience = new Experience();
+document.body.style.opacity = '1';
 
-console.log(experience);
+// console.log(experience);

@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
-:root{
+
+:root {
     --main: #BDA4C1;
 }
+
 * {
     margin: 0;
     padding: 0;
 }
+
 html,
 body {
     margin: 0;
@@ -13,19 +16,20 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Proxima Nova', 'Lato', sans-serif;
     /* This will disable all zoom/pan screen touch movements */
     touch-action: none;
 }
+
 body {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizelegibility;
     color: #fff;
-    background: rgb(247,244,244);
-    background: -moz-linear-gradient(0deg, rgba(247,244,244,1) 0%, rgba(254,254,254,1) 100%);
-    background: -webkit-linear-gradient(0deg, rgba(247,244,244,1) 0%, rgba(254,254,254,1) 100%);
-    background: linear-gradient(0deg, rgba(247,244,244,1) 0%, rgba(254,254,254,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f4f4",endColorstr="#fefefe",GradientType=1);
+    background: rgb(247, 244, 244);
+    background: -moz-linear-gradient(0deg, rgba(247, 244, 244, 1) 0%, rgba(254, 254, 254, 1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(247, 244, 244, 1) 0%, rgba(254, 254, 254, 1) 100%);
+    background: linear-gradient(0deg, rgba(247, 244, 244, 1) 0%, rgba(254, 254, 254, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f4f4", endColorstr="#fefefe", GradientType=1);
 }
 
 h1 {
@@ -33,28 +37,34 @@ h1 {
     left: 0.7em;
     top: 0;
 }
+
 img {
     width: 100%;
 }
+
 canvas {
-    display: unset!important;
+    display: unset !important;
     z-index: 10;
 }
+
 .visible {
     visibility: visible;
     opacity: 1;
     transition: opacity .2s linear;
 }
+
 .hidden {
     display: none;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s .2s, opacity .2s linear;
 }
+
 .full-opacity {
     opacity: 1;
     transition: opacity .2s linear;
 }
+
 .half-opacity {
     opacity: 0.5;
     transition: opacity .2s linear;
@@ -75,6 +85,7 @@ canvas {
     background-color: #fff;
     z-index: -5;
 }
+
 #loading-text-section p {
     margin-top: 1em;
 }
@@ -89,17 +100,20 @@ canvas {
     color: #4B4B4B;
     text-align: center;
 }
+
 .zapbox-logo {
     margin-top: 1em;
 }
+
 #zapbox-promo img {
     width: 147%;
     position: relative;
     right: 86px;
     bottom: 15px;
 }
+
 #launch-btn {
-    margin: 2em auto 0;
+    margin: 3em auto 0;
     display: block;
     border: 2px solid #e1e1e1;
     border-radius: 30px;
@@ -108,22 +122,30 @@ canvas {
     text-transform: uppercase;
     font-weight: bold;
     width: 150px;
-    z-index: 99999;
+    z-index: 9999;
     cursor: pointer;
 }
 
 #top-shadow {
     position: fixed;
 }
+
 .bottom-section {
-    position:fixed;
-    bottom:0;
-    z-index:2;
-    width:100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+    width: 100%;
 }
+
 #zappar-placement-ui,
-#zappar-replacement-ui, #zappar-camera-flip-ui, #zappar-take-photo-ui, #zappar-take-video-ui, #change-animation-ui, #go-back-ui {
-    margin:  0 auto 2em;
+#zappar-replacement-ui,
+#zappar-camera-flip-ui,
+#zappar-take-photo-ui,
+#zappar-take-video-ui,
+#change-animation-ui,
+.go-back-ui,
+.def-btn {
+    margin: 0 auto 2em;
     width: 200px;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
@@ -132,9 +154,11 @@ canvas {
     border-radius: 5px;
     cursor: pointer;
 }
+
 .splide {
     padding: 0 0.2em;
 }
+
 .splide p {
     position: relative;
     left: 1.5em;
@@ -142,37 +166,50 @@ canvas {
     line-height: 16px;
     text-align: justify;
 }
+
 .splide__track {
     bottom: 1.5em;
-    overflow: visible!important;
+    overflow: visible !important;
 }
+
 .splide__pagination {
     right: auto !important;
     left: 0.7em !important;
 }
+
 .splide__pagination--custom {
     display: none !important;
 }
+
 #swipe-to-discover {
     top: 6.7em;
     text-align: center;
     left: auto;
     padding-right: 0;
 }
-#call-to-action-btns, #snapshot-btns {
+
+#call-to-action-btns,
+#snapshot-btns {
     display: flex;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
 }
-#call-to-action-btns > * {
+
+#call-to-action-btns>* {
     flex-grow: 1;
     cursor: pointer;
     top: 5px;
     position: relative;
 }
 
-#reset-btn, #zappar-replacement-ui, #zappar-camera-flip-ui, #zappar-take-photo-ui, #zappar-take-video-ui, #change-animation-ui, #go-back-ui {
+#reset-btn,
+#zappar-replacement-ui,
+#zappar-camera-flip-ui,
+#zappar-take-photo-ui,
+#zappar-take-video-ui,
+#change-animation-ui,
+.go-back-ui {
     position: fixed;
     top: 0;
     left: auto;
@@ -188,24 +225,28 @@ canvas {
     left: 5px;
     top: 5px;
 }
+
 #zappar-take-photo-ui {
     padding: 0;
     margin: 0;
     left: 55px;
     top: 5px;
 }
+
 #zappar-take-video-ui {
     padding: 0;
     margin: 0;
     left: 105px;
     top: 5px;
 }
+
 #zappar-replacement-ui {
     padding: 0;
     margin: 0;
     left: 155px;
     top: 5px;
 }
+
 #change-animation-ui {
     display: none !important;
     padding: 0;
@@ -217,29 +258,34 @@ canvas {
     background: black;
 }
 
-#zappar-take-video-ui.recording{
-    background: red;
-}
+
+
 #back-btn {
     position: absolute;
     width: 44px;
     cursor: pointer;
 }
+
 #snapshot-btns {
     justify-content: center;
 }
-#snapshot-btns > * {
+
+#snapshot-btns>* {
     cursor: pointer;
 }
-#phone-toggle-btn, #snapshot-btn {
+
+#phone-toggle-btn,
+#snapshot-btn {
     margin-right: 1.5em;
     position: relative;
     right: 2em;
 }
+
 #phone-toggle-btn {
     align-self: center;
     width: 76px;
 }
+
 #snapshot-btn {
     width: 138px;
 }
@@ -249,120 +295,284 @@ canvas {
  * Snippets - https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
  */
 /* ----------- iPhone 4 and 4S ----------- */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-      body {
-          font-size: 0.7em;
-      }
-      #launch-btn {
-          margin: 2em auto 0;
-          position: relative;
-          bottom: 2.5em;
-      }
-      #zee-cookie-notice p {
-        width: 260px;
-    }
-}
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 1) {
-      #zapbox-promo-img {
-          width: 140%;
-          right: 76px;
-      }
-      #launch-btn {
-          margin: 2em auto 0;
-          position: relative;
-          bottom: 4.5em;
-      }
-}
-/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 568px)
-  and (-webkit-min-device-pixel-ratio: 2) {
+@media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
     body {
         font-size: 0.7em;
     }
+
+    #zee-cookie-notice p {
+        width: 260px;
+    }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 1) {
+    #zapbox-promo-img {
+        width: 140%;
+        right: 76px;
+    }
+
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+    body {
+        font-size: 0.7em;
+    }
+
     #swipe-to-discover {
         top: 2em;
     }
+
     .splide p {
         line-height: unset;
     }
+
     .two-lines {
         width: 70%;
     }
 }
+
 /* ----------- iPhone 6(+), 6S, 7(+) and 8(+) ----------- */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
     body {
         font-size: 1em;
     }
 }
+
 /* ----------- iPad 1, 2, Mini and Air ----------- */
-@media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
-  and (-webkit-min-device-pixel-ratio: 1) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
     body {
         font-size: 1.2em;
     }
+
     #swipe-to-discover {
         top: 2em;
     }
 }
+
 /* ----------- iPad 3, 4 and Pro 9.7" ----------- */
-@media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
-  and (-webkit-min-device-pixel-ratio: 2) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
     body {
         font-size: 1.5em;
     }
+
     #zappar-placement-ui {
         width: 300px;
     }
+
     .splide p {
         line-height: unset;
     }
 }
-#zappar-placement-ui{
-    margin: 0 auto 16em;
+
+#zappar-placement-ui {
+    margin: 0 auto 9em;
 }
-.panel-button{
+
+.panel-button {
     position: static !important;
     display: inline-block;
     vertical-align: top;
     margin: 0 10px !important;
+    width: 54px;
 }
-.panel-button.hidden{
+#zapparShareButton, #zapparSaveButton{
+    width: 64px !important;
+    height: 54px !important;
+    margin-bottom: 40px;
+    text-decoration: none;
+    display: block!important;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Proxima Nova Black";
+}
+#zapparShareButton img, #zapparSaveButton img{
+    width: 54px;
+    margin: auto;
+}
+
+.panel-button.hidden {
     display: none !important;
 }
-.bottom-action-panel{
+
+.bottom-action-panel {
     background: var(--main);
     position: fixed;
     bottom: 0;
     width: 100%;
     text-align: center;
-    padding-top: 6px;
-    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 25px;
     z-index: 3;
 }
-.mb-2{
+
+.mb-2 {
     margin-bottom: 20px;
 }
-#ZapparSnapshotContainer{
+
+#ZapparSnapshotContainer {
     background: var(--main) !important;
 }
-.triple-border-top > div{
+
+.triple-border-top>div {
     width: 100%;
     height: 4px;
     border-top: 1px solid black;
+}
+
+.splash-logo {
+    width: 184px;
+}
+
+.inner-border {
+    border: 1px solid black;
+}
+
+#splash-screen-scene {
+    position: relative;
+    background-color: #BCA3C0;
+}
+
+#splash-screen-scene .inner-border {
+    width: calc(100% - 60px);
+    height: calc(100% - 60px);
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+#splash-screen-scene .go-back-ui {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.go-back-ui {
+    width: 24px;
+    height: 24px;
+    top: 20px;
+    right: 15px;
+}
+
+.def-btn {
+    border-radius: 11px !important;
+    border: none !important;
+    font-family: 'Proxima Nova Black';
+    width: auto !important;
+    padding: 10px 20px !important;
+    display: inline-block;
+}
+
+.text-center {
+    text-align: center;
+}
+
+#zappar-take-video-ui {
+    position: relative !important;
+    left: 0;
+    top: 0;
+}
+
+.rec-dot {
+    opacity: 1;
+    transition: .3s;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    background: red;
+    -webkit-animation: 1s blink ease infinite;
+    -moz-animation: 1s blink ease infinite;
+    -ms-animation: 1s blink ease infinite;
+    -o-animation: 1s blink ease infinite;
+    animation: 1s blink ease infinite;
+}
+
+@keyframes blink {
+
+    from,
+    to {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes blink {
+
+    from,
+    to {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes blink {
+
+    from,
+    to {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes blink {
+
+    from,
+    to {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes blink {
+
+    from,
+    to {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+#zappar-take-video-ui:not(.recording) .rec-dot {
+    visibility: hidden !important;
+}
+
+#zapparCloseAref{
+    right: 0;
+}
+.sharing-frame{
+    width: 80%;
+    margin: auto;
+    margin-bottom: 5px;
+}
+.sharing-frame, .sharing-frame .inner-border{
+    padding: 5px;
+}
+#ZapparSnapshotContainer *{
+    transition: opacity .3s;
+    opacity: 1;
+}
+#ZapparSnapshotContainer:not(.ready) *{
+    opacity: 0;
+}
+.share-button-label{
+    color:#000;
+    display: inline-block;
 }

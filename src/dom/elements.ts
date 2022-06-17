@@ -24,7 +24,7 @@ class DocumentManager {
 
   private static takeVideoUI: HTMLElement = document.getElementById('zappar-take-video-ui')!;
 
-  private static goBackUI: HTMLElement = document.getElementById('go-back-ui')!;
+  private static goBackUIs: Array<Element> = Array.from(document.getElementsByClassName('go-back-ui')!);
 
   // private static cameraFlipUI: HTMLElement = document.getElementById('zappar-camera-flip-ui')!;
 
@@ -109,8 +109,10 @@ class DocumentManager {
     DocumentManager.takeVideoUI.classList.remove('hidden');
     DocumentManager.takeVideoUI.classList.add('visible');
 
-    DocumentManager.goBackUI.classList.remove('hidden');
-    DocumentManager.goBackUI.classList.add('visible');
+    DocumentManager.goBackUIs.forEach((element: Element) => {
+      element.classList.remove('hidden');
+      element.classList.add('visible');
+    });
 
     DocumentManager.instantTrackingScene.classList.remove('hidden');
     DocumentManager.instantTrackingScene.classList.add('visible');
@@ -168,8 +170,10 @@ class DocumentManager {
     DocumentManager.changeAnimationUI?.addEventListener('change', () => {
       this.world.setAnimation(DocumentManager.changeAnimationUI.value);
     });
-    DocumentManager.goBackUI?.addEventListener('click', () => {
-      window.location.href = 'https://kappafuturfestival.it/augmented_reality/';
+    DocumentManager.goBackUIs.forEach((element: Element) => {
+      element.addEventListener('click', () => {
+        window.location.href = 'https://kappafuturfestival.it/augmented_reality/';
+      });
     });
 
     /*

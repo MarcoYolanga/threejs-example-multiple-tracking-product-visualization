@@ -15,8 +15,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
-      favicon: 'assets/favicon.png',
-      title: 'Zappar Universal AR',
+      favicon: 'assets/favicon.jpg',
+      title: 'Kappa Futur Festival AR',
       minify: {
         collapseWhitespace: true,
         minifyCSS: true,
